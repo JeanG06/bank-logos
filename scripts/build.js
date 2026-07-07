@@ -63,7 +63,7 @@ async function runBuild() {
   // Step 4: Catalog
   console.log('\n▶ Step 4/5: Catalog');
   const catalog = writeCatalog();
-  console.log(`  ${catalog.length} entries → metadata/logos.json`);
+  console.log(`  ${catalog.logos.length} entries → metadata/logos.json`);
 
   // Step 5: Previews
   console.log('\n▶ Step 5/5: Previews');

@@ -53,7 +53,7 @@ async function runImport() {
 
   console.log(`\nUpdating catalog...`);
   const catalog = writeCatalog();
-  console.log(`Catalog updated: ${catalog.length} entries`);
+  console.log(`Catalog updated: ${catalog.logos.length} entries`);
 
   console.log(`Generating previews...`);
   await generateAllPreviews();
