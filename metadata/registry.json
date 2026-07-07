@@ -1,0 +1,5 @@
+{
+  "description": "Registro opcional de metadatos para logos. La convención de nombres es: {country}_{category}_{name}.svg",
+  "notes": "Si no hay entrada en registry.json, el catalogador extrae id, name, category y country del nombre del archivo.",
+  "overrides": {}
+}

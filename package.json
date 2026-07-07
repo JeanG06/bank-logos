@@ -1,0 +1,25 @@
+{
+  "name": "financial-logos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Biblioteca estandarizada de logos financieros en SVG",
+  "scripts": {
+    "normalize": "node scripts/normalize.js",
+    "optimize": "node scripts/optimize.js",
+    "validate": "node scripts/validate.js",
+    "catalog": "node scripts/catalog.js",
+    "preview": "node scripts/preview.js",
+    "import": "node scripts/import.js",
+    "build": "node scripts/build.js"
+  },
+  "keywords": ["logos", "svg", "financial", "assets"],
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "sharp": "^0.33.0",
+    "svgo": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

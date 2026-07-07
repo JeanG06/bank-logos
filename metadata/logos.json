@@ -1,0 +1,37 @@
+[
+  {
+    "id": "american-express",
+    "name": "American Express",
+    "category": "cards",
+    "country": "us",
+    "path": "logos/american-express.svg"
+  },
+  {
+    "id": "bancolombia",
+    "name": "Bancolombia",
+    "category": "banks",
+    "country": "co",
+    "path": "logos/bancolombia.svg"
+  },
+  {
+    "id": "cartera-fisica",
+    "name": "Cartera Fisica",
+    "category": "wallets",
+    "country": "global",
+    "path": "logos/cartera-fisica.svg"
+  },
+  {
+    "id": "lemon",
+    "name": "Lemon",
+    "category": "wallets",
+    "country": "ar",
+    "path": "logos/lemon.svg"
+  },
+  {
+    "id": "nequi",
+    "name": "Nequi",
+    "category": "banks",
+    "country": "co",
+    "path": "logos/nequi.svg"
+  }
+]
