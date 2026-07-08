@@ -3,6 +3,7 @@ const path = require('path');
 const config = require('../lib/config');
 const { normalizeFile } = require('../lib/normalize');
 const { optimize } = require('../lib/optimize');
+const { cropContent } = require('../lib/svg-utils');
 const { validateFile } = require('../lib/validate');
 const { writeCatalog, extractId } = require('../lib/catalog');
 const { generateAllPreviews } = require('../lib/preview');
@@ -35,7 +36,8 @@ async function runImport() {
     console.log(`  Processing: ${sf.relativePath}`);
 
     const sourceContent = fs.readFileSync(sf.filePath, 'utf-8');
-    const optimized = await optimize(sourceContent);
+    const cropped = cropContent(sourceContent);
+    const optimized = await optimize(cropped);
     const normalized = normalizeFile(optimized);
     fs.writeFileSync(outputPath, normalized, 'utf-8');
     console.log(`    Optimized → Normalized → logos/${id}.svg`);

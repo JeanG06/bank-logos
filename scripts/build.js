@@ -3,6 +3,7 @@ const path = require('path');
 const config = require('../lib/config');
 const { normalizeFile } = require('../lib/normalize');
 const { optimize } = require('../lib/optimize');
+const { cropContent } = require('../lib/svg-utils');
 const { validateAll } = require('../lib/validate');
 const { writeCatalog, extractId } = require('../lib/catalog');
 const { generateAllPreviews } = require('../lib/preview');
@@ -20,13 +21,14 @@ async function runBuild() {
     return;
   }
 
-  // Step 1: Optimize source → Step 2: Normalize
-  console.log('▶ Step 1-2/5: Optimize → Normalize');
+  // Step 1: Crop → Optmize → Normalize
+  console.log('▶ Step 1-3/5: Crop → Optimize → Normalize');
   fs.mkdirSync(config.paths.logos, { recursive: true });
   for (const sf of sourceFiles) {
     const id = extractId(sf.fileName);
     const sourceContent = fs.readFileSync(sf.filePath, 'utf-8');
-    const optimized = await optimize(sourceContent);
+    const cropped = cropContent(sourceContent);
+    const optimized = await optimize(cropped);
     const normalized = normalizeFile(optimized);
     fs.writeFileSync(path.join(config.paths.logos, `${id}.svg`), normalized, 'utf-8');
     console.log(`  ✓ ${sf.relativePath}`);
@@ -34,8 +36,8 @@ async function runBuild() {
 
   const logoFiles = fs.readdirSync(config.paths.logos).filter(f => f.endsWith('.svg'));
 
-  // Step 3: Validate
-  console.log('\n▶ Step 3/5: Validate');
+  // Step 4: Validate
+  console.log('\n▶ Step 4/5: Validate');
   const results = validateAll();
   let hasErrors = false;
   for (const result of results) {
@@ -53,13 +55,13 @@ async function runBuild() {
     process.exit(1);
   }
 
-  // Step 4: Catalog
-  console.log('\n▶ Step 4/5: Catalog');
+  // Step 5: Catalog
+  console.log('\n▶ Step 5/5: Catalog');
   const catalog = writeCatalog();
   console.log(`  ${catalog.logos.length} entries → metadata/logos.json`);
 
-  // Step 5: Previews
-  console.log('\n▶ Step 5/5: Previews');
+  // Step 6: Previews
+  console.log('\n▶ Step 6/6: Previews');
   await generateAllPreviews();
   console.log(`  ${logoFiles.length} preview(s) → preview/`);
 
