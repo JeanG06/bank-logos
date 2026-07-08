@@ -20,26 +20,19 @@ async function runBuild() {
     return;
   }
 
-  // Step 1: Normalize
-  console.log('▶ Step 1/5: Normalize');
+  // Step 1: Optimize source → Step 2: Normalize
+  console.log('▶ Step 1-2/5: Optimize → Normalize');
   fs.mkdirSync(config.paths.logos, { recursive: true });
   for (const sf of sourceFiles) {
     const id = extractId(sf.fileName);
-    const normalized = normalizeFile(sf.filePath);
+    const sourceContent = fs.readFileSync(sf.filePath, 'utf-8');
+    const optimized = await optimize(sourceContent);
+    const normalized = normalizeFile(optimized);
     fs.writeFileSync(path.join(config.paths.logos, `${id}.svg`), normalized, 'utf-8');
     console.log(`  ✓ ${sf.relativePath}`);
   }
 
-  // Step 2: Optimize
-  console.log('\n▶ Step 2/5: Optimize');
   const logoFiles = fs.readdirSync(config.paths.logos).filter(f => f.endsWith('.svg'));
-  for (const file of logoFiles) {
-    const filePath = path.join(config.paths.logos, file);
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const optimized = await optimize(content);
-    fs.writeFileSync(filePath, optimized, 'utf-8');
-    console.log(`  ✓ ${file}`);
-  }
 
   // Step 3: Validate
   console.log('\n▶ Step 3/5: Validate');

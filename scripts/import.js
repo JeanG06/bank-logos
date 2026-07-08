@@ -34,12 +34,11 @@ async function runImport() {
 
     console.log(`  Processing: ${sf.relativePath}`);
 
-    const normalized = normalizeFile(sf.filePath);
-    console.log(`    Normalized`);
-
-    const optimized = await optimize(normalized);
-    fs.writeFileSync(outputPath, optimized, 'utf-8');
-    console.log(`    Optimized → logos/${id}.svg`);
+    const sourceContent = fs.readFileSync(sf.filePath, 'utf-8');
+    const optimized = await optimize(sourceContent);
+    const normalized = normalizeFile(optimized);
+    fs.writeFileSync(outputPath, normalized, 'utf-8');
+    console.log(`    Optimized → Normalized → logos/${id}.svg`);
 
     const validation = validateFile(outputPath);
     if (validation.valid) {
